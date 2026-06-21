@@ -1,6 +1,6 @@
-# speech-code-web
+# SpeechCode Web
 
-Frontend SvelteKit do assistente de estudos **speech-code** — UI conectada ao RAG local (FastAPI + LangChain + ChromaDB + Ollama).
+Frontend SvelteKit do assistente de estudos **SpeechCode** — UI conectada ao RAG local (FastAPI + LangChain + ChromaDB + Ollama).
 
 ## Pré-requisitos
 
@@ -26,7 +26,7 @@ PUBLIC_API_URL=http://127.0.0.1:8000
 
 Terminal 1 — API:
 
-```powershell
+```shell
 cd ..\speech-code-api
 .\.venv\Scripts\Activate.ps1
 uvicorn main:app --reload --host 127.0.0.1 --port 8000
@@ -34,7 +34,7 @@ uvicorn main:app --reload --host 127.0.0.1 --port 8000
 
 Terminal 2 — Frontend:
 
-```powershell
+```shell
 cd speech-code-web
 npm run dev
 ```
@@ -70,15 +70,3 @@ speech-code-web/
 | `npm run dev` | Servidor de desenvolvimento (porta 5173) |
 | `npm run build` | Build de produção |
 | `npm run check` | Verificação TypeScript + Svelte |
-
-## Critérios de aceite (Fases 3 e 4)
-
-- [x] UI minimalista com upload + chat
-- [x] Upload envia PDF e exibe `chunks_indexed`
-- [x] Pergunta usa Form Action + `use:enhance` (sem reload completo)
-- [x] Loading e mensagens de erro na UI
-- [x] CORS da API permite `localhost:5173`
-
-## Próximos passos
-
-**Fase 5** — histórico de conversa multi-turno. Consulte [../docs/roadmap.md](../docs/roadmap.md).
