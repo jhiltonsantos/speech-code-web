@@ -41,6 +41,14 @@ npm run dev
 
 Abra [http://localhost:5173](http://localhost:5173).
 
+## Rotas
+
+| Rota | Descrição |
+|------|-----------|
+| `/` | Home com dois cards — upload de PDF e chat com o tutor |
+| `/upload` | Envio e indexação de PDF no ChromaDB |
+| `/chat` | Conversa com thread de mensagens e histórico persistido |
+
 ## Estrutura
 
 ```
@@ -48,11 +56,14 @@ speech-code-web/
 ├── src/
 │   ├── lib/
 │   │   ├── api/              # config, types, uploadPdf()
-│   │   └── components/       # PdfUpload, ChatPanel
+│   │   ├── chat/             # types + localStorage do histórico
+│   │   └── components/       # ActionCard, ChatPanel, PdfUpload, etc.
 │   └── routes/
-│       ├── +page.svelte      # Layout principal
-│       ├── +page.server.ts   # Form Action ask → POST /ask (SSR)
-│       └── +layout.svelte
+│       ├── +page.svelte      # Home (cards de navegação)
+│       ├── upload/+page.svelte
+│       └── chat/
+│           ├── +page.svelte
+│           └── +page.server.ts   # Form Action ask → POST /ask (SSR)
 └── .env.example
 ```
 
@@ -60,8 +71,19 @@ speech-code-web/
 
 | Ação | Onde | Como chama a API |
 |------|------|------------------|
-| Upload PDF | `PdfUpload.svelte` | `fetch` client-side → `POST /upload` |
-| Pergunta | `ChatPanel.svelte` | Form Action SSR → `POST /ask` via `+page.server.ts` |
+| Upload PDF | `/upload` → `PdfUpload.svelte` | `fetch` client-side → `POST /upload` |
+| Pergunta | `/chat` → `ChatPanel.svelte` | Form Action SSR → `POST /ask` via `chat/+page.server.ts` |
+
+## Histórico de conversas
+
+O chat em `/chat` mantém um thread de mensagens (usuário + tutor) persistido em **localStorage** (`speech-code:chat-history`).
+
+| Comportamento | Detalhe |
+|---------------|---------|
+| Persistência | Mesmo navegador/dispositivo; sobrevive ao recarregar a página |
+| Limpar | Botão "Limpar" remove mensagens e apaga o storage |
+| Erros da API | Não entram no histórico — exibidos como alerta temporário |
+| Follow-up contextual | A API ainda recebe só a pergunta atual (Fase 5 do roadmap) |
 
 ## Scripts
 

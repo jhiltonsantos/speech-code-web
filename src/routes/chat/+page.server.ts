@@ -19,7 +19,7 @@ export const actions = {
 		const question = formData.get('question')?.toString().trim();
 
 		if (!question) {
-			return fail(400, { error: 'Digite uma pergunta.', answer: null });
+			return fail(400, { error: 'Digite uma pergunta.', answer: null, question: null });
 		}
 
 		try {
@@ -38,15 +38,16 @@ export const actions = {
 				} catch {
 					// keep default message
 				}
-				return fail(response.status, { error: message, answer: null });
+				return fail(response.status, { error: message, answer: null, question: null });
 			}
 
 			const data = (await response.json()) as AskResponse;
-			return { answer: data.answer, error: null };
+			return { answer: data.answer, error: null, question };
 		} catch {
 			return fail(503, {
 				error: 'Não foi possível conectar à API em ' + getApiBaseUrl() + '.',
-				answer: null
+				answer: null,
+				question: null
 			});
 		}
 	}
