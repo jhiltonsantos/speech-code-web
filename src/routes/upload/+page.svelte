@@ -1,6 +1,6 @@
 <PageNav title="Materiais de estudo" />
 
-<main class="page-content page-content--narrow">
+<main class="w-full max-w-lg mx-auto">
 	<PdfUpload />
 </main>
 

@@ -2,6 +2,12 @@
 
 Frontend SvelteKit do assistente de estudos **SpeechCode** — UI conectada ao RAG local (FastAPI + LangChain + ChromaDB + Ollama).
 
+## Stack de UI
+
+- [Tailwind CSS v4](https://tailwindcss.com/) — utilitários no markup
+- [daisyUI 5](https://daisyui.com/) — componentes (`card`, `btn`, `alert`, `chat`, `badge`, etc.)
+- Tema escuro customizado **`speechcode`** definido em `src/app.css`
+
 ## Pré-requisitos
 
 - Node.js 20+ (20.19+ recomendado para Vite 8; este projeto usa Vite 6 para compatibilidade)
@@ -54,6 +60,7 @@ Abra [http://localhost:5173](http://localhost:5173).
 ```
 speech-code-web/
 ├── src/
+│   ├── app.css               # Tailwind + DaisyUI + tema speechcode
 │   ├── lib/
 │   │   ├── api/              # config, types, uploadPdf()
 │   │   ├── chat/             # types + localStorage do histórico

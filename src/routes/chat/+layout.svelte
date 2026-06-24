@@ -1,4 +1,4 @@
-<div class="layout-chat">
+<div class="w-full max-w-[720px] mx-auto">
 	{@render children()}
 </div>
 
@@ -7,11 +7,3 @@
 
 	let { children }: LayoutProps = $props();
 </script>
-
-<style>
-	.layout-chat {
-		width: 100%;
-		max-width: 720px;
-		margin: 0 auto;
-	}
-</style>

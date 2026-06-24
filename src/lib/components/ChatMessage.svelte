@@ -1,10 +1,19 @@
-<article class="chat-bubble chat-bubble--{message.role}" aria-label="{label}: {message.content}">
-	<header class="chat-bubble__meta">
-		<span class="chat-bubble__label">{label}</span>
-		<time datetime={message.createdAt}>{time}</time>
-	</header>
-	<p class="chat-bubble__content">{message.content}</p>
-</article>
+<div
+	class="chat {message.role === 'user' ? 'chat-end' : 'chat-start'}"
+	aria-label="{label}: {message.content}"
+>
+	<div class="chat-header text-xs opacity-70">
+		{label}
+		<time class="text-xs" datetime={message.createdAt}>{time}</time>
+	</div>
+	<div
+		class="chat-bubble whitespace-pre-wrap leading-relaxed {message.role === 'user'
+			? 'chat-bubble-primary'
+			: 'chat-bubble-neutral'}"
+	>
+		{message.content}
+	</div>
+</div>
 
 <script lang="ts">
 	import type { ChatMessage as ChatMessageType } from '$lib/chat/types';

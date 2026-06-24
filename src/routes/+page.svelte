@@ -1,9 +1,11 @@
-<header class="hero">
-	<h1>SpeechCode</h1>
-	<p>Assistente de estudos pessoal · RAG para Engenharia de Software e Inglês</p>
+<header class="text-center mb-8">
+	<h1 class="text-3xl font-bold tracking-tight m-0">SpeechCode</h1>
+	<p class="mt-2 mx-auto max-w-xl text-base-content/70">
+		Assistente de estudos pessoal · RAG para Engenharia de Software e Inglês
+	</p>
 </header>
 
-<main class="cards-grid">
+<main class="grid grid-cols-1 md:grid-cols-2 gap-5">
 	<ActionCard
 		href="/upload"
 		title="Enviar PDF"
@@ -25,24 +27,3 @@
 <script lang="ts">
 	import ActionCard from '$lib/components/ActionCard.svelte';
 </script>
-
-<style>
-	.hero {
-		margin-bottom: 2rem;
-		text-align: center;
-	}
-
-	.hero h1 {
-		margin: 0;
-		font-size: 2rem;
-		font-weight: 700;
-		letter-spacing: -0.02em;
-	}
-
-	.hero p {
-		margin: 0.5rem auto 0;
-		max-width: 36rem;
-		color: var(--text-muted);
-		font-size: 1rem;
-	}
-</style>

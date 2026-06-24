@@ -1,38 +1,50 @@
-<section class="panel">
-	<header class="panel-header">
-		<span class="badge badge--code">{'{ }'}</span>
-		<div>
-			<h2>Materiais de estudo</h2>
-			<p class="hint">PDF · Programação &amp; Inglês</p>
-		</div>
-	</header>
+<section class="card bg-base-200 border border-base-300">
+	<div class="card-body gap-4">
+		<header class="flex items-start gap-3">
+			<span class="badge badge-accent font-mono">{'{ }'}</span>
+			<div>
+				<h2 class="card-title text-lg m-0">Materiais de estudo</h2>
+				<p class="text-sm text-base-content/60 mt-1">PDF · Programação &amp; Inglês</p>
+			</div>
+		</header>
 
-	<form class="upload-form" onsubmit={onSubmit}>
-		<label class="file-label">
-			<input type="file" accept=".pdf,application/pdf" onchange={onFileChange} disabled={uploading} />
-			<span>{selectedFile ? selectedFile.name : 'Escolher PDF…'}</span>
-		</label>
-		<button type="submit" disabled={uploading || !selectedFile}>
-			{uploading ? 'Indexando…' : 'Enviar PDF'}
-		</button>
-	</form>
+		<form class="flex flex-col gap-3" onsubmit={onSubmit}>
+			<input
+				type="file"
+				class="file-input file-input-bordered w-full bg-base-100"
+				accept=".pdf,application/pdf"
+				onchange={onFileChange}
+				disabled={uploading}
+			/>
+			<button type="submit" class="btn btn-primary self-start" disabled={uploading || !selectedFile}>
+				{uploading ? 'Indexando…' : 'Enviar PDF'}
+			</button>
+		</form>
 
-	{#if uploading}
-		<p class="status loading">Extraindo texto e gerando embeddings — pode levar alguns minutos.</p>
-	{/if}
+		{#if uploading}
+			<div role="status" class="alert alert-info text-sm">
+				<span class="loading loading-spinner loading-sm"></span>
+				<span>Extraindo texto e gerando embeddings — pode levar alguns minutos.</span>
+			</div>
+		{/if}
 
-	{#if error}
-		<p class="status error" role="alert">{error}</p>
-	{/if}
+		{#if error}
+			<div role="alert" class="alert alert-error text-sm">
+				<span>{error}</span>
+			</div>
+		{/if}
 
-	{#if result}
-		<div class="status success">
-			<p>{result.message}</p>
-			<p class="meta">
-				<strong>{result.filename}</strong> · {result.chunks_indexed} trechos indexados
-			</p>
-		</div>
-	{/if}
+		{#if result}
+			<div role="status" class="alert alert-success text-sm">
+				<div>
+					<p class="m-0">{result.message}</p>
+					<p class="text-base-content/60 text-sm mt-2 m-0">
+						<strong>{result.filename}</strong> · {result.chunks_indexed} trechos indexados
+					</p>
+				</div>
+			</div>
+		{/if}
+	</div>
 </section>
 
 <script lang="ts">

@@ -4,7 +4,7 @@
 	<meta name="description" content="Assistente de estudos pessoal para Engenharia de Software e Inglês" />
 </svelte:head>
 
-<div class="app-shell">
+<div class="min-h-screen max-w-[1100px] mx-auto p-6">
 	{@render children()}
 </div>
 
