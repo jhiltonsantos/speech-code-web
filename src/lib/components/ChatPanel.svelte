@@ -15,28 +15,8 @@
 			{/if}
 		</div>
 
-		<form
-			method="POST"
-			action="?/ask"
-			use:enhance={() => {
-				submitting = true;
-				return async ({ result, update }) => {
-					await update();
-					submitting = false;
-
-					if (result.type === 'success') {
-						const data = result.data as FormResult;
-						if (data.answer && data.question) {
-							appendExchange(data.question, data.answer);
-							question = '';
-						}
-					}
-				};
-			}}
-			class="flex flex-col gap-3"
-		>
+		<form class="flex flex-col gap-3" onsubmit={onSubmit}>
 			<textarea
-				name="question"
 				class="textarea textarea-bordered w-full min-h-20 resize-y bg-base-100"
 				bind:value={question}
 				placeholder="Ex.: Quais são os padrões de projeto mais usados?"
@@ -60,35 +40,24 @@
 			</div>
 		{/if}
 
-		{#if form?.error}
+		{#if error}
 			<div role="alert" class="alert alert-error text-sm">
-				<span>{form.error}</span>
+				<span>{error}</span>
 			</div>
 		{/if}
 	</div>
 </section>
 
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import { onMount } from 'svelte';
+	import { askQuestion } from '$lib/api/ask';
 	import { clearChatSession, loadChatSession, saveChatSession } from '$lib/chat/storage';
 	import { createChatMessage, type ChatMessage as ChatMessageType } from '$lib/chat/types';
 	import ChatMessage from './ChatMessage.svelte';
 
-	type FormResult = {
-		answer?: string | null;
-		error?: string | null;
-		question?: string | null;
-	};
-
-	type Props = {
-		form: FormResult | null | undefined;
-	};
-
-	let { form }: Props = $props();
-
 	let submitting = $state(false);
 	let question = $state('');
+	let error = $state<string | null>(null);
 	let messages = $state<ChatMessageType[]>([]);
 	let threadEl = $state<HTMLElement | null>(null);
 
@@ -106,6 +75,7 @@
 			return;
 		}
 		messages = [];
+		error = null;
 		clearChatSession();
 	}
 
@@ -120,5 +90,24 @@
 			createChatMessage('user', userContent),
 			createChatMessage('assistant', assistantContent)
 		]);
+	}
+
+	async function onSubmit(event: SubmitEvent) {
+		event.preventDefault();
+		const trimmed = question.trim();
+		if (!trimmed || submitting) return;
+
+		submitting = true;
+		error = null;
+
+		try {
+			const answer = await askQuestion(trimmed);
+			appendExchange(trimmed, answer);
+			question = '';
+		} catch (err) {
+			error = err instanceof Error ? err.message : 'Não foi possível obter uma resposta.';
+		} finally {
+			submitting = false;
+		}
 	}
 </script>

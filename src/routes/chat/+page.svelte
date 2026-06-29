@@ -10,14 +10,12 @@
 </header>
 
 <main class="w-full">
-	<ChatPanel bind:this={chatPanel} {form} />
+	<ChatPanel bind:this={chatPanel} />
 </main>
 
 <script lang="ts">
 	import ChatPanel from '$lib/components/ChatPanel.svelte';
 	import PageNav from '$lib/components/PageNav.svelte';
-	import type { PageProps } from './$types';
 
-	let { form }: PageProps = $props();
 	let chatPanel = $state<ChatPanel | undefined>(undefined);
 </script>

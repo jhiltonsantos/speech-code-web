@@ -1,0 +1,22 @@
+appId: com.speechcode.app
+productName: SpeechCode
+directories:
+  output: dist/desktop
+  buildResources: static
+files:
+  - build/**
+  - dist-electron/**
+  - package.json
+extraResources:
+  - from: resources/api
+    to: api
+    filter:
+      - '**/*'
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
